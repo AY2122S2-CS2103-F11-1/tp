@@ -40,6 +40,7 @@
     "phone" : "9482427",
     "email" : "lydia@example.com",
     "address" : "little tokyo",
+    "remark" : "",
     "tagged" : [ ]
   }, {
     "name" : "George Best",
