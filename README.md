@@ -4,13 +4,13 @@
 
 ![Ui](docs/images/Ui.png)
 
-* This is **a sample project for Software Engineering (SE) students**.<br>
-  Example usages:
-  * as a starting point of a course project (as opposed to writing everything from scratch)
-  * as a case study
-* The project simulates an ongoing software project for a desktop application (called _AddressBook_) used for managing contact details.
-  * It is **written in OOP fashion**. It provides a **reasonably well-written** code base **bigger** (around 6 KLoC) than what students usually write in beginner-level SE modules, without being overwhelmingly big.
-  * It comes with a **reasonable level of user and developer documentation**.
-* It is named `AddressBook Level 3` (`AB3` for short) because it was initially created as a part of a series of `AddressBook` projects (`Level 1`, `Level 2`, `Level 3` ...).
-* For the detailed documentation of this project, see the **[Address Book Product Website](https://se-education.org/addressbook-level3)**.
-* This project is a **part of the se-education.org** initiative. If you would like to contribute code to this project, see [se-education.org](https://se-education.org#https://se-education.org/#contributing) for more info.
+* This is an application for managers and/or supervisors who has alot of day to day tasks and employees to keep track of. <br/>
+
+  <b>Example usages:</b>
+  * add day-to-day tasks
+  * view all day-to-day tasks to have a better picture of the current schedule
+  * view a specific day-to-day task
+  * edit day-to-day tasks when details of said task has been changed
+
+* Project code is based on [Address Book Product Website](https://se-education.org/addressbook-level3)**.
+
