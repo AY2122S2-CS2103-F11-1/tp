@@ -19,15 +19,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Project Advisor
 
-### Jane Doe
+### Alfred Koh
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/alfredkohhh.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/alfredkohhh)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Developer, Documentation, Code-Quality
+* Responsibilities: Documentation, Code-Quality, User-Stories
 
 ### Johnny Doe
 
