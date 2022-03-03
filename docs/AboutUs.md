@@ -37,7 +37,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/dannytayjy.md)]
 
 * Role: Developer
-* Responsibilities: Documentation and Code Quality
+* Responsibilities: Deliverables and Deadlines, Code Quality
+* In Charge of Component UI
 
 ### Jean Doe
 
