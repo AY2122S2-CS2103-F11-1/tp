@@ -29,14 +29,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Team Lead
 * Responsibilities: UI
 
-### Johnny Doe
+### Tay Jun Yang
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/dannytayjy.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](http://github.com/dannytayjy)]
+[[portfolio](team/dannytayjy.md)]
 
 * Role: Developer
-* Responsibilities: Data
+* Responsibilities: Documentation and Code Quality
 
 ### Jean Doe
 
