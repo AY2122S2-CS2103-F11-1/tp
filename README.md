@@ -4,7 +4,7 @@
 
 ![Ui](docs/images/Ui.png)
 
-* This is an application for managers and/or supervisors who has alot of day to day tasks and employees to keep track of. <br/>
+ManageEZPZ is a desktop application that allows managers or supervisors to manage employees and assign tasks to them. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java. <br/>
 
   <b>Example usages:</b>
   * add day-to-day tasks
@@ -12,5 +12,7 @@
   * view a specific day-to-day task
   * edit day-to-day tasks when details of said task has been changed
 
-* Project code is based on [Address Book Product Website](https://se-education.org/addressbook-level3)**.
+<b>Acknowledgment:</b></br>
+
+This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
 
