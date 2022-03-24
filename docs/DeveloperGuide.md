@@ -251,6 +251,11 @@ The command is as follows: taskEdit [TASK_INDEX] desc/ [DESC] at/ [TIME] date/ [
 - At least one of [DESC], [TIME] and [DATE] should not be empty.
 - desc/ [DESC], at/ [TIME] or date/ [DATE] may be omitted but all of them cannot be omitted at the same time.
 
+
+Below is a sequence diagram of the editing of a task.
+
+![EditTaskSequenceDiagram](images/EditTaskSequenceDiagram.png)
+
 Step 1. The user executes a `editTask 1 desc/ eat` to edit the 1st task in the address book. The `editTask` command
 in `AddressBookParser` calls `EditTaskCommandParser.parse()` 
 and parses the task index which is given as 1 and the task description that the
