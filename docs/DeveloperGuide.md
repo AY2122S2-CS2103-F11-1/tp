@@ -238,6 +238,66 @@ _{more aspects and alternatives to be added}_
 
 _{Explain here how the data archiving feature will be implemented}_
 
+### \[Proposed\] Editing details of a task
+
+The proposed edit mechanism is facilitated by `EditTaskCommandParser` and `EditTaskCommand`. <br/>
+`EditTaskCommandParser.parse()` - parses the input by the user and returns a `EditTaskCommand` object. <br/>
+`EditTaskCommand.execute()` - creates a new `Task` object based on the parsed user input and calls `Model.setTask()` 
+to replace the old `Task` object with the new `Task` object.
+
+The command is as follows: taskEdit [TASK_INDEX] desc/ [DESC] at/ [TIME] date/ [DATE]
+
+- [TASK_INDEX] must not be empty.
+- At least one of [DESC], [TIME] and [DATE] should not be empty.
+- desc/ [DESC], at/ [TIME] or date/ [DATE] may be omitted but all of them cannot be omitted at the same time.
+
+Step 1. The user executes a `editTask 1 desc/ eat` to edit the 1st task in the address book. The `editTask` command
+in `AddressBookParser` calls `EditTaskCommandParser.parse()` 
+and parses the task index which is given as 1 and the task description that the
+user wants to edit his task with is parsed as a String with value eat. 
+
+If either the description or the date or time was not provided by the user, then the default value
+would be an empty String. Otherwise, it would be parsed as a String with value provided by the user.
+It is not the responsibility of `EditTaskCommandParser.parse()` to ensure that the input provided by the user is valid.
+It will however ensure that a `Task` index is provided and 
+at least the description or date or time has a corresponding value.
+
+Step 2.  
+In `LogicManager`, `EditTaskCommand.execute()` is called. This `EditTaskCommand` object is the one that was returned
+by `EditTaskCommandParser.parse()`. Within the `execute()` method,  there are 3 cases to consider.
+
+1. The task is of type Todo.
+2. The task is of type Deadline.
+3. The task is of type Event.
+
+Each case is being handled separately by its corresponding handler method. 
+
+In general, what each handler method will do is to ensure that the input provided 
+by the user is valid and if so, create a new `Task` object with the given input and 
+call `model.setTask()` to replace the old `Task` object 
+with the new `Task` object. If there are some input which is not provided, then the default value would be the
+same value as the old `Task` object. If any input is not valid, a `ParseException` is thrown.
+
+For `editTask 1 desc/ eat`, in step 1, we have obtained the task index which is given as 1. 
+Using `model.getFilteredTaskList().get(index)` we obtain a copy of the task that the user wants to edit. 
+Next, depending on what type the obtained task is, the corresponding handler method is called.
+
+If the task is of type Todo, then the handler method will create a new `Todo` object with the description value as
+"eat", call `model.setTask()` and return a CommandResult showing that the update has been successful.
+
+If the task is of type Deadline, then the handler method will create a new `Deadline` object with the description 
+value as "eat", and the date and time values set to be the same 
+values from the copy obtained using `model.getFilteredTaskList().get(index)`. Then, `model.setTask()` is called and
+return a CommandResult showing that the update has been successful.
+
+If the task is of type Event, then the handler method will create a new `Event` object with the description
+value as "eat", and the date and time values set to be the same
+value from the copy obtained using `model.getFilteredTaskList().get(index)`. Then, `model.setTask()` is called and
+return a CommandResult showing that the update has been successful. 
+
+<b>Note:</b> For the Event type, a String value with two time values corresponding to be the start and end time 
+separated with an **empty space** must be provided. Other than the time values being valid, 
+the range between the start and end time must be valid as well. For example, 1700 2000 is valid while 2000 1700 is not.   
 
 --------------------------------------------------------------------------------------------------------------------
 
