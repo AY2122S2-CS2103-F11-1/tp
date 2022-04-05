@@ -61,6 +61,8 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
                 String timeInput = argMultimap.getValue(PREFIX_AT_DATETIME).get();
                 String[] timeInputParts = timeInput.split(" ");
 
+                System.out.println("Meow");
+
                 if (timeInputParts.length == 2) {
                     eventStartTime = ParserUtil.parseTime(timeInputParts[0]);
                     eventEndTime = ParserUtil.parseTime(timeInputParts[1]);
@@ -76,8 +78,7 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
             throw new ParseException(pe.getMessage() + "\n\n" + EditTaskCommand.MESSAGE_USAGE, pe);
         }
 
-        if (!CollectionUtil.isAnyNonNull(desc, date) && (!CollectionUtil.isAnyNonNull(deadlineTime)
-                || !CollectionUtil.isAnyNonNull(eventStartTime, eventEndTime))) {
+        if (!CollectionUtil.isAnyNonNull(desc, date, deadlineTime, eventStartTime, eventEndTime)) {
             throw new ParseException(MESSAGE_FIELD_NOT_EDITED + EditEmployeeCommand.MESSAGE_USAGE);
         }
 
