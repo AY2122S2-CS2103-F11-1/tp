@@ -111,7 +111,7 @@ public class EditTaskCommand extends Command {
         try {
             if (currentTask.getType().equalsIgnoreCase("todo")) {
                 if (date != null || deadlineTime != null || (eventStartTime != null && eventEndTime != null)) {
-                    throw new CommandException(String.format(MESSAGE_TODO_SHOULD_NOT_HAVE_DATETIME, MESSAGE_USAGE);
+                    throw new CommandException(String.format(MESSAGE_TODO_SHOULD_NOT_HAVE_DATETIME, MESSAGE_USAGE));
                 }
 
                 updatedTask = updateTodo((Todo) currentTask, this.desc);
