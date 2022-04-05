@@ -2,13 +2,19 @@ package manageezpz.logic.parser;
 
 import static manageezpz.commons.core.Messages.MESSAGE_FIELD_NOT_EDITED;
 import static manageezpz.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT_BIND;
+import static manageezpz.commons.core.Messages.MESSAGE_INVALID_TIME_RANGE;
 import static manageezpz.logic.parser.CliSyntax.PREFIX_AT_DATETIME;
 import static manageezpz.logic.parser.CliSyntax.PREFIX_DATE;
 import static manageezpz.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 
 import manageezpz.commons.core.index.Index;
+import manageezpz.commons.util.CollectionUtil;
+import manageezpz.logic.commands.EditEmployeeCommand;
 import manageezpz.logic.commands.EditTaskCommand;
 import manageezpz.logic.parser.exceptions.ParseException;
+import manageezpz.model.task.Date;
+import manageezpz.model.task.Description;
+import manageezpz.model.task.Time;
 
 /**
  * Parses input arguments and creates a new EditTaskCommand object.
@@ -24,9 +30,7 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
     @Override
     public EditTaskCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_DESCRIPTION, PREFIX_AT_DATETIME, PREFIX_DATE);
-
-        System.out.println(argMultimap.getPreamble());
+                ArgumentTokenizer.tokenize(args, PREFIX_DESCRIPTION, PREFIX_DATE, PREFIX_AT_DATETIME);
 
         // Invalid command if getPreamble() is empty or contains whitespaces
         if (argMultimap.getPreamble().isEmpty() || argMultimap.getPreamble().contains(" ")) {
@@ -36,22 +40,47 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
 
         Index index;
 
+        Description desc = null;
+        Date date = null;
+        Time deadlineTime = null;
+        Time eventStartTime = null;
+        Time eventEndTime = null;
+
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
+
+            if (argMultimap.getValue(PREFIX_DESCRIPTION).isPresent()) {
+                desc = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION).get());
+            }
+
+            if (argMultimap.getValue(PREFIX_DATE).isPresent()) {
+                date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
+            }
+
+            if (argMultimap.getValue(PREFIX_AT_DATETIME).isPresent()) {
+                String timeInput = argMultimap.getValue(PREFIX_AT_DATETIME).get();
+                String[] timeInputParts = timeInput.split(" ");
+
+                if (timeInputParts.length == 2) {
+                    eventStartTime = ParserUtil.parseTime(timeInputParts[0]);
+                    eventEndTime = ParserUtil.parseTime(timeInputParts[1]);
+
+                    if (eventEndTime.getParsedTime().compareTo(eventStartTime.getParsedTime()) < 1) {
+                        throw new ParseException(MESSAGE_INVALID_TIME_RANGE);
+                    }
+                } else {
+                    deadlineTime = ParserUtil.parseTime(timeInputParts[0]);
+                }
+            }
         } catch (ParseException pe) {
             throw new ParseException(pe.getMessage() + "\n\n" + EditTaskCommand.MESSAGE_USAGE, pe);
         }
 
-        if (argMultimap.getValue(PREFIX_DESCRIPTION).isEmpty()
-                && argMultimap.getValue(PREFIX_DATE).isEmpty()
-                && argMultimap.getValue(PREFIX_AT_DATETIME).isEmpty()) {
-            throw new ParseException(MESSAGE_FIELD_NOT_EDITED + EditTaskCommand.MESSAGE_USAGE);
+        if (!CollectionUtil.isAnyNonNull(desc, date) && (!CollectionUtil.isAnyNonNull(deadlineTime)
+                || !CollectionUtil.isAnyNonNull(eventStartTime, eventEndTime))) {
+            throw new ParseException(MESSAGE_FIELD_NOT_EDITED + EditEmployeeCommand.MESSAGE_USAGE);
         }
 
-        String desc = argMultimap.getValue(PREFIX_DESCRIPTION).orElse("");
-        String date = argMultimap.getValue(PREFIX_DATE).orElse("");
-        String time = argMultimap.getValue(PREFIX_AT_DATETIME).orElse("");
-
-        return new EditTaskCommand(index, desc, date, time);
+        return new EditTaskCommand(index, desc, date, deadlineTime, eventStartTime, eventEndTime);
     }
 }

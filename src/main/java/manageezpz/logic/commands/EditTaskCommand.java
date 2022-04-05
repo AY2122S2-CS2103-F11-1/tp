@@ -3,10 +3,6 @@ package manageezpz.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static manageezpz.commons.core.Messages.MESSAGE_DUPLICATE_TASK;
 import static manageezpz.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
-import static manageezpz.commons.core.Messages.MESSAGE_INVALID_TASK_TYPE;
-import static manageezpz.commons.core.Messages.MESSAGE_INVALID_TIME_FORMAT;
-import static manageezpz.commons.core.Messages.MESSAGE_INVALID_TIME_RANGE;
-import static manageezpz.commons.util.CollectionUtil.requireAllNonNull;
 import static manageezpz.logic.parser.CliSyntax.PREFIX_AT_DATETIME;
 import static manageezpz.logic.parser.CliSyntax.PREFIX_DATE;
 import static manageezpz.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
@@ -15,8 +11,6 @@ import java.util.List;
 
 import manageezpz.commons.core.index.Index;
 import manageezpz.logic.commands.exceptions.CommandException;
-import manageezpz.logic.parser.ParserUtil;
-import manageezpz.logic.parser.exceptions.ParseException;
 import manageezpz.model.Model;
 import manageezpz.model.task.Date;
 import manageezpz.model.task.Deadline;
@@ -61,10 +55,23 @@ public class EditTaskCommand extends Command {
 
     public static final String MESSAGE_EDIT_TASK_SUCCESS = "Update Task success: %1$s";
 
+    public static final String MESSAGE_TODO_SHOULD_NOT_HAVE_DATETIME =
+            "Todo Task should not have date or time! \n\n%1$s";
+
+    public static final String MESSAGE_INVALID_TIME_DETAILS_DEADLINE =
+            "Invalid time details for Deadline Task! Deadline Task should only have one time provided!\n\n%1$s";
+
+    public static final String MESSAGE_INVALID_TIME_DETAILS_EVENT =
+            "Invalid time details for Event Task! Event Task should have start time and end time!\n\n%1$s";
+
+    public static final String MESSAGE_INVALID_TASK_TYPE = "Task is an invalid Task Type!";
+
     private final Index index;
-    private final String desc;
-    private final String date;
-    private final String time;
+    private final Description desc;
+    private final Date date;
+    private final Time deadlineTime;
+    private final Time eventStartTime;
+    private final Time eventEndTime;
 
     /**
      * Constructor to initialize an instance of EditTaskCommand class
@@ -74,14 +81,18 @@ public class EditTaskCommand extends Command {
      * @param index Index of the Task to edit information
      * @param desc New description of the Task
      * @param date New date of the Task
-     * @param time New time of the Task
+     * @param deadlineTime New time of the Task (for Deadline)
+     * @param eventStartTime New start time of the Task (for Event)
+     * @param eventEndTime New end time of the Task (for Event)
      */
-    public EditTaskCommand(Index index, String desc, String date, String time) {
-        requireAllNonNull(index, desc, date, time);
+    public EditTaskCommand(Index index, Description desc, Date date, Time deadlineTime,
+                           Time eventStartTime, Time eventEndTime) {
         this.index = index;
         this.desc = desc;
         this.date = date;
-        this.time = time;
+        this.deadlineTime = deadlineTime;
+        this.eventStartTime = eventStartTime;
+        this.eventEndTime = eventEndTime;
     }
 
     @Override
@@ -99,11 +110,24 @@ public class EditTaskCommand extends Command {
 
         try {
             if (currentTask.getType().equalsIgnoreCase("todo")) {
+                if (date != null || deadlineTime != null || (eventStartTime != null && eventEndTime != null)) {
+                    throw new CommandException(MESSAGE_TODO_SHOULD_NOT_HAVE_DATETIME);
+                }
+
                 updatedTask = updateTodo((Todo) currentTask, this.desc);
             } else if (currentTask.getType().equalsIgnoreCase("deadline")) {
-                updatedTask = updateDeadline((Deadline) currentTask, this.desc, this.date, this.time);
+                if (eventStartTime != null && eventEndTime != null) {
+                    throw new CommandException(String.format(MESSAGE_INVALID_TIME_DETAILS_DEADLINE, MESSAGE_USAGE));
+                }
+
+                updatedTask = updateDeadline((Deadline) currentTask, this.desc, this.date, this.deadlineTime);
             } else if (currentTask.getType().equalsIgnoreCase("event")) {
-                updatedTask = updateEvent((Event) currentTask, this.desc, this.date, this.time);
+                if (deadlineTime != null) {
+                    throw new CommandException(String.format(MESSAGE_INVALID_TIME_DETAILS_EVENT, MESSAGE_USAGE));
+                }
+
+                updatedTask = updateEvent((Event) currentTask, this.desc, this.date,
+                        this.eventStartTime, this.eventEndTime);
             } else {
                 // Should not reach this as there are only three types of tasks
                 throw new CommandException(MESSAGE_INVALID_TASK_TYPE);
@@ -111,74 +135,79 @@ public class EditTaskCommand extends Command {
 
             model.setTask(currentTask, updatedTask);
             return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, updatedTask));
-        } catch (ParseException pe) {
-            throw new CommandException(pe.getMessage() + "\n\n" + EditTaskCommand.MESSAGE_USAGE, pe);
         } catch (DuplicateTaskException de) {
             throw new CommandException(String.format(MESSAGE_DUPLICATE_TASK, this.desc) + MESSAGE_USAGE);
         }
     }
 
-    private Task updateTodo(Todo currentTask, String desc) throws ParseException {
+    /**
+     * Updates a Todo task.
+     *
+     * @param currentTask Current Todo task that is to be updated
+     * @param desc New description of the Todo Task
+     * @return Updated Todo task
+     */
+    private Task updateTodo(Todo currentTask, Description desc) {
         Todo updatedToDoTask = new Todo(currentTask);
 
-        if (!desc.isEmpty()) {
-            Description newDesc = ParserUtil.parseDescription(desc);
-            updatedToDoTask.setDescription(newDesc);
+        if (desc != null) {
+            updatedToDoTask.setDescription(desc);
         }
 
         return updatedToDoTask;
     }
 
-    private Task updateDeadline(Deadline currentTask, String desc, String date, String time) throws ParseException {
+    /**
+     * Updates a Deadline task.
+     *
+     * @param currentTask Current Deadline task that is to be updated
+     * @param desc New description of the Deadline Task
+     * @param date New date of the Deadline Task
+     * @param time New time of the Deadline Task
+     * @return Updated Todo task
+     */
+    private Task updateDeadline(Deadline currentTask, Description desc, Date date, Time time) {
         Deadline updatedDeadlineTask = new Deadline(currentTask);
 
-        if (!desc.isEmpty()) {
-            Description newDesc = ParserUtil.parseDescription(desc);
-            updatedDeadlineTask.setDescription(newDesc);
+        if (desc != null) {
+            updatedDeadlineTask.setDescription(desc);
         }
 
-        if (!date.isEmpty()) {
-            Date newDate = ParserUtil.parseDate(date);
-            updatedDeadlineTask.setDate(newDate);
+        if (date != null) {
+            updatedDeadlineTask.setDate(date);
         }
 
-        if (!time.isEmpty()) {
-            Time newTime = ParserUtil.parseTime(time);
-            updatedDeadlineTask.setTime(newTime);
+        if (time != null) {
+            updatedDeadlineTask.setTime(time);
         }
 
         return updatedDeadlineTask;
     }
 
-    private Task updateEvent(Event currentTask, String desc, String date, String time) throws ParseException {
+    /**
+     * Updates an Event task.
+     *
+     * @param currentTask Current Event task that is to be updated
+     * @param desc New description of the Event Task
+     * @param date New date of the Event Task
+     * @param startTime New start time of the Event Task
+     * @param endTime New end time of the Event Task
+     * @return Updated Todo task
+     */
+    private Task updateEvent(Event currentTask, Description desc, Date date, Time startTime, Time endTime) {
         Event updatedEventTask = new Event(currentTask);
 
-        if (!desc.isEmpty()) {
-            Description newDesc = ParserUtil.parseDescription(desc);
-            updatedEventTask.setDescription(newDesc);
+        if (desc != null) {
+            updatedEventTask.setDescription(desc);
         }
 
-        if (!date.isEmpty()) {
-            Date newDate = ParserUtil.parseDate(date);
-            updatedEventTask.setDate(newDate);
+        if (date != null) {
+            updatedEventTask.setDate(date);
         }
 
-        if (!time.isEmpty()) {
-            String[] newStartEndTimeStrParts = time.split(" ");
-
-            if (newStartEndTimeStrParts.length != 2) {
-                throw new ParseException(MESSAGE_INVALID_TIME_FORMAT);
-            }
-
-            Time newStartTime = ParserUtil.parseTime(newStartEndTimeStrParts[0]);
-            Time newEndTime = ParserUtil.parseTime(newStartEndTimeStrParts[1]);
-
-            if (newEndTime.getParsedTime().compareTo(newStartTime.getParsedTime()) < 1) {
-                throw new ParseException(MESSAGE_INVALID_TIME_RANGE);
-            }
-
-            updatedEventTask.setStartTime(newStartTime);
-            updatedEventTask.setEndTime(newEndTime);
+        if (startTime != null && endTime != null) {
+            updatedEventTask.setStartTime(startTime);
+            updatedEventTask.setEndTime(endTime);
         }
 
         return updatedEventTask;
