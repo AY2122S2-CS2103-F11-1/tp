@@ -48,12 +48,6 @@ class FindTaskCommandTest {
         PROJECT_CAPSTONE.setPriority("HIGH");
         FYP_REPORT.setPriority("HIGH");
 
-        // Set Assignee
-        RETURN_BOOK.addAssignees(ALICE);
-        PROJECT_CAPSTONE.addAssignees(ALICE);
-        FYP_REPORT.addAssignees(ALICE);
-        HOUSE_VISTING.addAssignees(ALICE);
-
         // Set marked
         RETURN_BOOK.setTaskDone();
         PROJECT_CAPSTONE.setTaskDone();
@@ -157,6 +151,12 @@ class FindTaskCommandTest {
 
     @Test
     void findCommand_findTaskWithAssignee_showTasksWithGivenAssignee() {
+        // Set Assignee
+        RETURN_BOOK.addAssignees(ALICE);
+        PROJECT_CAPSTONE.addAssignees(ALICE);
+        FYP_REPORT.addAssignees(ALICE);
+        HOUSE_VISTING.addAssignees(ALICE);
+        
         TaskMultiplePredicate predicate = new TaskMultiplePredicate(null,
                 null, null, null, ALICE.getName().fullName, null);
         expectedModel.updateFilteredTaskList(predicate);
