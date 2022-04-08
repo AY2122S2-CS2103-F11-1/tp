@@ -22,10 +22,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import manageezpz.commons.core.LogsCenter;
 import manageezpz.model.Model;
 import manageezpz.model.ModelManager;
 import manageezpz.model.UserPrefs;
@@ -35,6 +37,7 @@ import manageezpz.model.task.Task;
 import manageezpz.model.task.TaskMultiplePredicate;
 
 class FindTaskCommandTest {
+    private static final Logger logger = LogsCenter.getLogger(FindTaskCommandTest.class);
     private Model model = new ModelManager(getTypicalAddressBookTasks(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalAddressBookTasks(), new UserPrefs());
 
@@ -161,8 +164,8 @@ class FindTaskCommandTest {
         List<Task> expectedTasks = List.of(PROJECT_CAPSTONE, FYP_REPORT, RETURN_BOOK, HOUSE_VISTING);
         FindTaskCommand command = new FindTaskCommand(predicate);
 
-        //assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        //assertEquals(expectedTasks, model.getFilteredTaskList());
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(expectedTasks, model.getFilteredTaskList());
     }
 
     @Test
