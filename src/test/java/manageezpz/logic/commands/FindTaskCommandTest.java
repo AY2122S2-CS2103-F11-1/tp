@@ -156,7 +156,6 @@ class FindTaskCommandTest {
         PROJECT_CAPSTONE.addAssignees(ALICE);
         FYP_REPORT.addAssignees(ALICE);
         HOUSE_VISTING.addAssignees(ALICE);
-        
         TaskMultiplePredicate predicate = new TaskMultiplePredicate(null,
                 null, null, null, ALICE.getName().fullName, null);
         expectedModel.updateFilteredTaskList(predicate);
