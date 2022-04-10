@@ -8,14 +8,11 @@ import static manageezpz.logic.commands.DeleteTaskCommand.MESSAGE_DELETE_TASK_SU
 import static manageezpz.logic.commands.DeleteTaskCommand.MESSAGE_USAGE;
 import static manageezpz.testutil.TypicalIndexes.INDEX_FIRST;
 import static manageezpz.testutil.TypicalIndexes.INDEX_SECOND;
-import static manageezpz.testutil.TypicalPersons.BOB;
 import static manageezpz.testutil.TypicalPersons.GEORGE;
 import static manageezpz.testutil.TypicalTasks.getTypicalAddressBookTasks;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import manageezpz.model.AddressBook;
-import manageezpz.testutil.AddressBookBuilder;
 import org.junit.jupiter.api.Test;
 
 import manageezpz.commons.core.index.Index;
@@ -55,18 +52,14 @@ public class DeleteTaskCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        /*model.addPerson(BENSON);*/
+        model.addPerson(GEORGE);
 
-        Task taskToDelete = model.getFilteredTaskList().get(INDEX_SECOND.getZeroBased());
+        Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST.getZeroBased());
 
-        if (taskToDelete.getAssignees().contains(GEORGE)) {
-            model.untagEmployeeFromTask(taskToDelete, GEORGE);
-        }
+        model.tagEmployeeToTask(taskToDelete, model.getAddressBook().getPersonList().get(0));
+        model.increaseNumOfTasks(model.getAddressBook().getPersonList().get(0));
 
-        /*model.tagEmployeeToTask(taskToDelete, model.getAddressBook().getPersonList().get(0));
-        model.increaseNumOfTasks(model.getAddressBook().getPersonList().get(0));*/
-
-        DeleteTaskCommand deleteTaskCommand = new DeleteTaskCommand(INDEX_SECOND);
+        DeleteTaskCommand deleteTaskCommand = new DeleteTaskCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
 
