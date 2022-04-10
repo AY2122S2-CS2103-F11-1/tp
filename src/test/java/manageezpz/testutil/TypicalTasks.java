@@ -8,7 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import manageezpz.model.AddressBook;
-import manageezpz.model.task.*;
+import manageezpz.model.task.Deadline;
+import manageezpz.model.task.Event;
+import manageezpz.model.task.Task;
+import manageezpz.model.task.Todo;
 
 public class TypicalTasks {
 

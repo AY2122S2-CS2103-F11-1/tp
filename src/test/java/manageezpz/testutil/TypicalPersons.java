@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import manageezpz.model.AddressBook;
-import manageezpz.model.person.Name;
 import manageezpz.model.person.Person;
 
 /**

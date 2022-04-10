@@ -16,10 +16,10 @@ import static manageezpz.testutil.TypicalTasks.REVIEW_MONTHLY_FINANCE_KPI;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import manageezpz.commons.core.index.Index;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import manageezpz.commons.core.index.Index;
 import manageezpz.model.AddressBook;
 import manageezpz.model.Model;
 import manageezpz.model.ModelManager;
