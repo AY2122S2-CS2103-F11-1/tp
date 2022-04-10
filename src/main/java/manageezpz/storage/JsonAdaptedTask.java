@@ -138,7 +138,7 @@ class JsonAdaptedTask {
     }
 
     public void handleLoad(Task task, boolean isDone, String priority,
-                           String tag, ObservableList<Person> persons) {
+                               String tag, ObservableList<Person> persons) {
         if (isDone) {
             task.setTaskDone();
         }
@@ -157,17 +157,8 @@ class JsonAdaptedTask {
             }
         }
     }
-
     public void handleGeneralNullChecks(String description, String type, String status, String tag, String priority)
             throws IllegalValueException {
-        handleDescriptionChecks(description);
-        handleTypeChecks(type);
-        handleStatusChecks(status);
-        handleTagChecks(tag);
-        handlePriorityChecks(priority);
-    }
-
-    public void handleDescriptionChecks(String description) throws IllegalValueException {
         if (description == null) {
             throw new IllegalValueException(String.format(NULL_DESCRIPTION_MESSAGE_FORMAT,
                     Description.class.getSimpleName()));
@@ -177,9 +168,7 @@ class JsonAdaptedTask {
             throw new IllegalValueException(String.format(INVALID_DESCRIPTION_MESSAGE_FORMAT,
                     Description.class.getSimpleName()));
         }
-    }
 
-    public void handleTypeChecks(String type) throws IllegalValueException {
         if (type == null) {
             throw new IllegalValueException(String.format(NULL_TYPE_MESSAGE_FORMAT, Task.class.getSimpleName()));
         }
@@ -187,9 +176,7 @@ class JsonAdaptedTask {
         if (!(type.equals("todo") || type.equals("deadline") || type.equals("event"))) {
             throw new IllegalValueException(String.format(INCORRECT_TYPE_MESSAGE_FORMAT, Task.class.getSimpleName()));
         }
-    }
 
-    public void handleStatusChecks(String status) throws IllegalValueException {
         if (status == null) {
             throw new IllegalValueException(String.format(NULL_STATUS_MESSAGE_FORMAT, Task.class.getSimpleName()));
         }
@@ -197,15 +184,11 @@ class JsonAdaptedTask {
         if (!(status.equals(" ") || status.equals("X"))) {
             throw new IllegalValueException(String.format(INVALID_STATUS_MESSAGE_FORMAT, Task.class.getSimpleName()));
         }
-    }
 
-    public void handleTagChecks(String tag) throws IllegalValueException {
         if (tag == null) {
             throw new IllegalValueException(String.format(NULL_TAG_MESSAGE_FORMAT, Tag.class.getSimpleName()));
         }
-    }
 
-    public void handlePriorityChecks(String priority) throws IllegalValueException {
         if (priority == null) {
             throw new IllegalValueException(String.format(NULL_PRIORITY_MESSAGE_FORMAT,
                     Priority.class.getSimpleName()));
@@ -219,77 +202,50 @@ class JsonAdaptedTask {
     }
 
     public void handleDeadlineNullChecks(String date, String deadlineTime) throws IllegalValueException {
-        handleDateChecks(date, type);
-        handleTimeChecks(deadlineTime, type, "deadlineTime");
+        if (date == null) {
+            throw new IllegalValueException(String.format(NULL_DEADLINE_DATE_MESSAGE_FORMAT,
+                    Date.class.getSimpleName()));
+        }
+
+        if (!Date.isValidDate(date)) {
+            throw new IllegalValueException(String.format(INVALID_DEADLINE_DATE_MESSAGE_FORMAT,
+                    Date.class.getSimpleName()));
+        }
+        if (deadlineTime == null) {
+            throw new IllegalValueException(String.format(NULL_DEADLINE_TIME_MESSAGE_FORMAT,
+                    Time.class.getSimpleName()));
+        }
+        if (!Time.isValidTime(deadlineTime)) {
+            throw new IllegalValueException(String.format(INVALID_DEADLINE_TIME_MESSAGE_FORMAT,
+                    Time.class.getSimpleName()));
+        }
     }
 
     public void handleEventNullChecks(String date, String eventStartTime, String eventEndTime)
             throws IllegalValueException {
-        handleDateChecks(date, type);
-        handleTimeChecks(eventStartTime, type, "eventStartTime");
-        handleTimeChecks(eventEndTime, type, "eventEndTime");
-    }
-
-    public void handleDateChecks(String date, String type) throws IllegalValueException {
         if (date == null) {
-            if (type.equals("deadline")) {
-                throw new IllegalValueException(String.format(NULL_DEADLINE_DATE_MESSAGE_FORMAT,
-                        Date.class.getSimpleName()));
-            }
-            if (type.equals("event")) {
-                throw new IllegalValueException(String.format(NULL_EVENT_DATE_MESSAGE_FORMAT,
-                        Date.class.getSimpleName()));
-            }
+            throw new IllegalValueException(String.format(NULL_EVENT_DATE_MESSAGE_FORMAT,
+                    Date.class.getSimpleName()));
         }
 
         if (!Date.isValidDate(date)) {
-            if (type.equals("deadline")) {
-                throw new IllegalValueException(String.format(INVALID_DEADLINE_DATE_MESSAGE_FORMAT,
-                        Date.class.getSimpleName()));
-            }
-            if (type.equals("event")) {
-                throw new IllegalValueException(String.format(INVALID_EVENT_DATE_MESSAGE_FORMAT,
-                        Date.class.getSimpleName()));
-            }
+            throw new IllegalValueException(String.format(INVALID_EVENT_DATE_MESSAGE_FORMAT,
+                    Date.class.getSimpleName()));
         }
-    }
 
-    public void handleTimeChecks(String time, String type, String timeIdentifier) throws IllegalValueException {
-        if (time == null) {
-            if (type.equals("deadline")) {
-                throw new IllegalValueException(String.format(NULL_DEADLINE_TIME_MESSAGE_FORMAT,
-                        Date.class.getSimpleName()));
-            }
-            if (type.equals("event")) {
-                handleEventTimeNullIdentifier(timeIdentifier);
-            }
-        }
-        if (!Time.isValidTime(time)) {
-            if (type.equals("deadline")) {
-                throw new IllegalValueException(String.format(INVALID_DEADLINE_TIME_MESSAGE_FORMAT,
-                        Time.class.getSimpleName()));
-            }
-            if (type.equals("event")) {
-                handleEventTimeInvalidIdentifier(timeIdentifier);
-            }
-        }
-    }
-
-    public void handleEventTimeNullIdentifier(String timeIdentifier) throws IllegalValueException {
-        if (timeIdentifier.equals("eventStartTime")) {
+        if (eventStartTime == null) {
             throw new IllegalValueException(String.format(NULL_EVENT_START_TIME_MESSAGE_FORMAT,
                     Time.class.getSimpleName()));
-        } else if (timeIdentifier.equals("eventEndTime")) {
+        }
+        if (!Time.isValidTime(eventStartTime)) {
+            throw new IllegalValueException(String.format(INVALID_EVENT_START_TIME_MESSAGE_FORMAT,
+                    Time.class.getSimpleName()));
+        }
+        if (eventEndTime == null) {
             throw new IllegalValueException(String.format(NULL_EVENT_END_TIME_MESSAGE_FORMAT,
                     Time.class.getSimpleName()));
         }
-    }
-
-    public void handleEventTimeInvalidIdentifier(String timeIdentifier) throws IllegalValueException {
-        if (timeIdentifier.equals("eventStartTime")) {
-            throw new IllegalValueException(String.format(INVALID_EVENT_START_TIME_MESSAGE_FORMAT,
-                    Time.class.getSimpleName()));
-        } else if (timeIdentifier.equals("eventEndTime")) {
+        if (!Time.isValidTime(eventEndTime)) {
             throw new IllegalValueException(String.format(INVALID_EVENT_END_TIME_MESSAGE_FORMAT,
                     Time.class.getSimpleName()));
         }
