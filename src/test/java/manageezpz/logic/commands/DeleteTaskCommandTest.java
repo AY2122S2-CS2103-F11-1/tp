@@ -1,11 +1,7 @@
 package manageezpz.logic.commands;
 
-import static manageezpz.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
-import static manageezpz.logic.commands.CommandTestUtil.assertCommandFailure;
 import static manageezpz.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static manageezpz.logic.commands.CommandTestUtil.showTaskAtIndex;
 import static manageezpz.logic.commands.DeleteTaskCommand.MESSAGE_DELETE_TASK_SUCCESS;
-import static manageezpz.logic.commands.DeleteTaskCommand.MESSAGE_USAGE;
 import static manageezpz.testutil.TypicalIndexes.INDEX_FIRST;
 import static manageezpz.testutil.TypicalIndexes.INDEX_SECOND;
 import static manageezpz.testutil.TypicalPersons.AMY;
@@ -17,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import manageezpz.model.AddressBook;
 import org.junit.jupiter.api.Test;
 
-import manageezpz.commons.core.index.Index;
 import manageezpz.model.Model;
 import manageezpz.model.ModelManager;
 import manageezpz.model.UserPrefs;
