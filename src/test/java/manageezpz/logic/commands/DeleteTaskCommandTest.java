@@ -6,13 +6,15 @@ import static manageezpz.testutil.TypicalIndexes.INDEX_FIRST;
 import static manageezpz.testutil.TypicalIndexes.INDEX_SECOND;
 import static manageezpz.testutil.TypicalPersons.AMY;
 import static manageezpz.testutil.TypicalPersons.BOB;
-import static manageezpz.testutil.TypicalTasks.*;
+import static manageezpz.testutil.TypicalTasks.GET_DRINK;
+import static manageezpz.testutil.TypicalTasks.HOUSE_VISTING;
+import static manageezpz.testutil.TypicalTasks.READ_BOOK;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import manageezpz.model.AddressBook;
 import org.junit.jupiter.api.Test;
 
+import manageezpz.model.AddressBook;
 import manageezpz.model.Model;
 import manageezpz.model.ModelManager;
 import manageezpz.model.UserPrefs;
@@ -24,27 +26,6 @@ import manageezpz.model.task.Task;
  */
 public class DeleteTaskCommandTest {
     private Model model;
-
-    /*@Test
-    public void execute_validIndexUnfilteredList_success() { // Failed on GitHub
-        Task taskToDelete = model.getAddressBook().getTaskList().get(INDEX_FIRST.getZeroBased());
-
-        // Add Benson to model's UniquePersonList
-        model.addPerson(BENSON);
-        // Tag task with index 1 in model's UniqueTaskList to Benson
-        model.tagEmployeeToTask(taskToDelete, model.getAddressBook().getPersonList().get(0));
-        // Increase Benson's numOfTasks by 1
-        model.increaseNumOfTasks(model.getAddressBook().getPersonList().get(0));
-
-        DeleteTaskCommand deleteTaskCommand = new DeleteTaskCommand(INDEX_FIRST);
-
-        String expectedMessage = String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
-
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deleteTask(taskToDelete);
-
-        assertCommandSuccess(deleteTaskCommand, model, expectedMessage, expectedModel);
-    }*/
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
@@ -84,69 +65,6 @@ public class DeleteTaskCommandTest {
 
         assertCommandSuccess(deleteTaskCommand, model, expectedMessage, expectedModel);
     }
-
-    /*@Test
-    public void execute_invalidIndexUnfilteredList_throwsCommandException() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
-
-        DeleteTaskCommand deleteTaskCommand = new DeleteTaskCommand(outOfBoundIndex);
-
-        assertCommandFailure(deleteTaskCommand, model,
-                String.format(MESSAGE_INVALID_TASK_DISPLAYED_INDEX, MESSAGE_USAGE));
-    }*/
-
-    /*@Test
-    public void execute_validIndexFilteredList_success() { // Failed on GitHub
-        showTaskAtIndex(model, INDEX_FIRST);
-
-        Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST.getZeroBased());
-        DeleteTaskCommand deleteTaskCommand = new DeleteTaskCommand(INDEX_FIRST);
-
-        String expectedMessage = String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
-
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deleteTask(taskToDelete);
-        showNoTask(expectedModel);
-
-        assertCommandSuccess(deleteTaskCommand, model, expectedMessage, expectedModel);
-    }*/
-
-    /*@Test
-    public void execute_validIndexFilteredList_success() {
-        showTaskAtIndex(model, INDEX_FIRST);
-
-        model.addPerson(BOB);
-
-        Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST.getZeroBased());
-
-        model.tagEmployeeToTask(taskToDelete, model.getAddressBook().getPersonList().get(0));
-        model.increaseNumOfTasks(model.getAddressBook().getPersonList().get(0));
-
-        DeleteTaskCommand deleteTaskCommand = new DeleteTaskCommand(INDEX_FIRST);
-
-        String expectedMessage = String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
-
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deleteTask(taskToDelete);
-        showNoTask(expectedModel);
-
-        assertCommandSuccess(deleteTaskCommand, model, expectedMessage, expectedModel);
-    }*/
-
-    /*@Test
-    public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showTaskAtIndex(model, INDEX_FIRST);
-
-        Index outOfBoundIndex = INDEX_SECOND;
-
-        // Ensures that outOfBoundIndex is still in bounds of address book task list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getTaskList().size());
-
-        DeleteTaskCommand deleteTaskCommand = new DeleteTaskCommand(outOfBoundIndex);
-
-        assertCommandFailure(deleteTaskCommand, model,
-                String.format(MESSAGE_INVALID_TASK_DISPLAYED_INDEX, MESSAGE_USAGE));
-    }*/
 
     @Test
     public void equals() {
