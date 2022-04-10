@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import manageezpz.model.AddressBook;
 import manageezpz.testutil.AddressBookBuilder;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import manageezpz.commons.core.index.Index;
@@ -29,9 +30,12 @@ import manageezpz.model.task.Task;
  */
 public class DeleteTaskCommandTest {
 
-    // private final Model model = new ModelManager(getTypicalAddressBookTasks(), new UserPrefs());
-    private final AddressBook addressBook = new AddressBookBuilder(getTypicalAddressBookTasks()).build();
-    private final Model model = new ModelManager(addressBook, new UserPrefs());
+    private Model model;
+
+    @BeforeEach
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBookTasks(), new UserPrefs());
+    }
 
     /*@Test
     public void execute_validIndexUnfilteredList_success() { // Failed on GitHub
