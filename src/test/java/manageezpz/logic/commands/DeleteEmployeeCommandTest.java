@@ -8,10 +8,16 @@ import static manageezpz.logic.commands.DeleteEmployeeCommand.MESSAGE_DELETE_PER
 import static manageezpz.logic.commands.DeleteEmployeeCommand.MESSAGE_USAGE;
 import static manageezpz.testutil.TypicalIndexes.INDEX_FIRST;
 import static manageezpz.testutil.TypicalIndexes.INDEX_SECOND;
-import static manageezpz.testutil.TypicalPersons.getTypicalAddressBookEmployees;
+import static manageezpz.testutil.TypicalPersons.ALEX;
+import static manageezpz.testutil.TypicalPersons.BERNICE;
+import static manageezpz.testutil.TypicalTasks.FINISH_CLIENT_PROPOSAL;
+import static manageezpz.testutil.TypicalTasks.MEETING_WITH_CLIENT;
+import static manageezpz.testutil.TypicalTasks.REVIEW_MONTHLY_FINANCE_KPI;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import manageezpz.model.AddressBook;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import manageezpz.commons.core.index.Index;
@@ -26,7 +32,36 @@ import manageezpz.model.person.Person;
  */
 public class DeleteEmployeeCommandTest {
 
-    private final Model model = new ModelManager(getTypicalAddressBookEmployees(), new UserPrefs());
+    private Model model;
+
+    @BeforeEach
+    public void setUp() {
+        model = new ModelManager(new AddressBook(), new UserPrefs());
+
+        // Add persons to the new address book
+        model.addPerson(ALEX);
+        model.addPerson(BERNICE);
+
+        // Add tasks to the new address book
+        model.addTask(REVIEW_MONTHLY_FINANCE_KPI);
+        model.addTask(FINISH_CLIENT_PROPOSAL);
+        model.addTask(MEETING_WITH_CLIENT);
+
+        // Tag REVIEW_MONTHLY_FINANCE_KPI task to ALEX
+        model.tagEmployeeToTask(model.getAddressBook().getTaskList().get(0),
+                model.getAddressBook().getPersonList().get(0));
+        model.increaseNumOfTasks(model.getAddressBook().getPersonList().get(0));
+
+        // Tag FINISH_CLIENT_PROPOSAL task to ALEX
+        model.tagEmployeeToTask(model.getAddressBook().getTaskList().get(1),
+                model.getAddressBook().getPersonList().get(0));
+        model.increaseNumOfTasks(model.getAddressBook().getPersonList().get(0));
+
+        // Tag MEETING_WITH_CLIENT task to ALEX
+        model.tagEmployeeToTask(model.getAddressBook().getTaskList().get(2),
+                model.getAddressBook().getPersonList().get(0));
+        model.increaseNumOfTasks(model.getAddressBook().getPersonList().get(0));
+    }
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
