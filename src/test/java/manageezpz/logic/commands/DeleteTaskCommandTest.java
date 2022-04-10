@@ -13,6 +13,8 @@ import static manageezpz.testutil.TypicalTasks.getTypicalAddressBookTasks;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import manageezpz.model.AddressBook;
+import manageezpz.testutil.AddressBookBuilder;
 import org.junit.jupiter.api.Test;
 
 import manageezpz.commons.core.index.Index;
@@ -27,7 +29,9 @@ import manageezpz.model.task.Task;
  */
 public class DeleteTaskCommandTest {
 
-    private final Model model = new ModelManager(getTypicalAddressBookTasks(), new UserPrefs());
+    // private final Model model = new ModelManager(getTypicalAddressBookTasks(), new UserPrefs());
+    private final AddressBook addressBook = new AddressBookBuilder(getTypicalAddressBookTasks()).build();
+    private final Model model = new ModelManager(addressBook, new UserPrefs());
 
     /*@Test
     public void execute_validIndexUnfilteredList_success() { // Failed on GitHub
@@ -56,9 +60,9 @@ public class DeleteTaskCommandTest {
 
         Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST.getZeroBased());
 
-        if (taskToDelete.getAssignees().contains(BOB)) {
+        /*if (taskToDelete.getAssignees().contains(BOB)) {
             model.untagEmployeeFromTask(taskToDelete, BOB);
-        }
+        }*/
 
         /*model.tagEmployeeToTask(taskToDelete, model.getAddressBook().getPersonList().get(0));
         model.increaseNumOfTasks(model.getAddressBook().getPersonList().get(0));*/
