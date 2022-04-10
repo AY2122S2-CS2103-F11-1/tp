@@ -95,11 +95,17 @@ public class DeleteTaskCommandTest {
         assertCommandSuccess(deleteTaskCommand, model, expectedMessage, expectedModel);
     }*/
 
-    /*@Test
+    @Test
     public void execute_validIndexFilteredList_success() {
         showTaskAtIndex(model, INDEX_FIRST);
 
+        model.addPerson(BOB);
+
         Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST.getZeroBased());
+
+        model.tagEmployeeToTask(taskToDelete, model.getAddressBook().getPersonList().get(0));
+        model.increaseNumOfTasks(model.getAddressBook().getPersonList().get(0));
+
         DeleteTaskCommand deleteTaskCommand = new DeleteTaskCommand(INDEX_FIRST);
 
         String expectedMessage = String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
@@ -109,7 +115,7 @@ public class DeleteTaskCommandTest {
         showNoTask(expectedModel);
 
         assertCommandSuccess(deleteTaskCommand, model, expectedMessage, expectedModel);
-    }*/
+    }
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
