@@ -52,12 +52,12 @@ public class DeleteTaskCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        model.addPerson(BENSON);
+        /*model.addPerson(BENSON);*/
 
         Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST.getZeroBased());
 
-        model.tagEmployeeToTask(taskToDelete, model.getAddressBook().getPersonList().get(0));
-        model.increaseNumOfTasks(model.getAddressBook().getPersonList().get(0));
+        /*model.tagEmployeeToTask(taskToDelete, model.getAddressBook().getPersonList().get(0));
+        model.increaseNumOfTasks(model.getAddressBook().getPersonList().get(0));*/
 
         DeleteTaskCommand deleteTaskCommand = new DeleteTaskCommand(INDEX_FIRST);
 

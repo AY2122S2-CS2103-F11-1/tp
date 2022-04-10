@@ -126,7 +126,20 @@ public class CommandTestUtil {
     public static void assertCommandSuccess(Command command, Model actualModel, CommandResult expectedCommandResult,
             Model expectedModel) {
         try {
+            System.out.println(actualModel.getAddressBook().getTaskList());
+            System.out.println(actualModel.getAddressBook().getPersonList());
+            System.out.println(expectedModel.getAddressBook().getTaskList());
+            System.out.println(expectedModel.getAddressBook().getPersonList());
+
+            System.out.println(actualModel);
+            System.out.println(expectedModel);
+            System.out.println(expectedCommandResult);
+
             CommandResult result = command.execute(actualModel);
+
+            System.out.println("CommandTestUtil: " + actualModel.equals(expectedModel));
+            System.out.println(result);
+
             assertEquals(expectedCommandResult, result);
             assertEquals(expectedModel, actualModel);
         } catch (CommandException ce) {
