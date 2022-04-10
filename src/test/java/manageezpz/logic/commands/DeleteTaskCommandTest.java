@@ -57,6 +57,7 @@ public class DeleteTaskCommandTest {
         Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST.getZeroBased());
 
         model.tagEmployeeToTask(taskToDelete, model.getAddressBook().getPersonList().get(0));
+        model.increaseNumOfTasks(model.getAddressBook().getPersonList().get(0));
 
         DeleteTaskCommand deleteTaskCommand = new DeleteTaskCommand(INDEX_FIRST);
 
