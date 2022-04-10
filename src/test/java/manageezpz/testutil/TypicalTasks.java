@@ -8,10 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import manageezpz.model.AddressBook;
-import manageezpz.model.task.Deadline;
-import manageezpz.model.task.Event;
-import manageezpz.model.task.Task;
-import manageezpz.model.task.Todo;
+import manageezpz.model.task.*;
 
 public class TypicalTasks {
 
@@ -36,6 +33,16 @@ public class TypicalTasks {
     // Manually added - Task's details found in {@code CommandTestUtil}
     public static final Todo GET_A_DRINK = new TodoBuilder().withDescription(VALID_TASK_DESCRIPTION).build();
 
+    // Added for DeleteTaskCommandTest
+    public static final Todo REVIEW_MONTHLY_FINANCE_KPI = new TodoBuilder()
+            .withDescription("Review Monthly Finance KPI")
+            .build();
+    public static final Deadline FINISH_CLIENT_PROPOSAL = new DeadlineBuilder()
+            .withDescription("Finish Client Proposal").withDate("2022-03-15").withTime("1800")
+            .build();
+    public static final Event MEETING_WITH_CLIENT = new EventBuilder()
+            .withDescription("Meeting with Client").withDate("2022-03-15").withStartTime("1300").withEndTime("1400")
+            .build();
 
     private TypicalTasks() {} // prevents instantiation
 

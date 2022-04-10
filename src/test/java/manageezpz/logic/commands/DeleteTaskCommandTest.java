@@ -4,11 +4,11 @@ import static manageezpz.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static manageezpz.logic.commands.DeleteTaskCommand.MESSAGE_DELETE_TASK_SUCCESS;
 import static manageezpz.testutil.TypicalIndexes.INDEX_FIRST;
 import static manageezpz.testutil.TypicalIndexes.INDEX_SECOND;
-import static manageezpz.testutil.TypicalPersons.AMY;
-import static manageezpz.testutil.TypicalPersons.BOB;
-import static manageezpz.testutil.TypicalTasks.GET_DRINK;
-import static manageezpz.testutil.TypicalTasks.HOUSE_VISTING;
-import static manageezpz.testutil.TypicalTasks.READ_BOOK;
+import static manageezpz.testutil.TypicalPersons.ALEX;
+import static manageezpz.testutil.TypicalPersons.BERNICE;
+import static manageezpz.testutil.TypicalTasks.FINISH_CLIENT_PROPOSAL;
+import static manageezpz.testutil.TypicalTasks.MEETING_WITH_CLIENT;
+import static manageezpz.testutil.TypicalTasks.REVIEW_MONTHLY_FINANCE_KPI;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -32,25 +32,25 @@ public class DeleteTaskCommandTest {
         model = new ModelManager(new AddressBook(), new UserPrefs());
 
         // Add persons to the new address book
-        model.addPerson(AMY);
-        model.addPerson(BOB);
+        model.addPerson(ALEX);
+        model.addPerson(BERNICE);
 
         // Add tasks to the new address book
-        model.addTask(READ_BOOK);
-        model.addTask(GET_DRINK);
-        model.addTask(HOUSE_VISTING);
+        model.addTask(REVIEW_MONTHLY_FINANCE_KPI);
+        model.addTask(FINISH_CLIENT_PROPOSAL);
+        model.addTask(MEETING_WITH_CLIENT);
 
-        // Tag READ_BOOK task to AMY
+        // Tag REVIEW_MONTHLY_FINANCE_KPI task to ALEX
         model.tagEmployeeToTask(model.getAddressBook().getTaskList().get(0),
                 model.getAddressBook().getPersonList().get(0));
         model.increaseNumOfTasks(model.getAddressBook().getPersonList().get(0));
 
-        // Tag GET_DRINK task to AMY
+        // Tag FINISH_CLIENT_PROPOSAL task to ALEX
         model.tagEmployeeToTask(model.getAddressBook().getTaskList().get(1),
                 model.getAddressBook().getPersonList().get(0));
         model.increaseNumOfTasks(model.getAddressBook().getPersonList().get(0));
 
-        // Tag HOUSE_VISTING task to AMY
+        // Tag MEETING_WITH_CLIENT task to ALEX
         model.tagEmployeeToTask(model.getAddressBook().getTaskList().get(2),
                 model.getAddressBook().getPersonList().get(0));
         model.increaseNumOfTasks(model.getAddressBook().getPersonList().get(0));
