@@ -46,7 +46,7 @@ public class TypicalPersons {
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).build();
 
-    // Added for DeleteTaskCommandTest
+    // Added for DeleteEmployeeCommandTest and DeleteTaskCommandTest
     public static final Person ALEX = new PersonBuilder().withName("Alex Yeoh").withPhone("87438807")
             .withEmail("alexyeoh@example.com").build();
     public static final Person BERNICE = new PersonBuilder().withName("Bernice Yu").withPhone("99272758")

@@ -36,7 +36,7 @@ public class TypicalTasks {
     // Manually added - Task's details found in {@code CommandTestUtil}
     public static final Todo GET_A_DRINK = new TodoBuilder().withDescription(VALID_TASK_DESCRIPTION).build();
 
-    // Added for DeleteTaskCommandTest
+    // Added for DeleteEmployeeCommandTest and DeleteTaskCommandTest
     public static final Todo REVIEW_MONTHLY_FINANCE_KPI = new TodoBuilder()
             .withDescription("Review Monthly Finance KPI")
             .build();
