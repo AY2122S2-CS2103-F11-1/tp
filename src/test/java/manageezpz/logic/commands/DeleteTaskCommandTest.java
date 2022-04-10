@@ -8,7 +8,7 @@ import static manageezpz.logic.commands.DeleteTaskCommand.MESSAGE_DELETE_TASK_SU
 import static manageezpz.logic.commands.DeleteTaskCommand.MESSAGE_USAGE;
 import static manageezpz.testutil.TypicalIndexes.INDEX_FIRST;
 import static manageezpz.testutil.TypicalIndexes.INDEX_SECOND;
-import static manageezpz.testutil.TypicalPersons.GEORGE;
+import static manageezpz.testutil.TypicalPersons.BOB;
 import static manageezpz.testutil.TypicalTasks.getTypicalAddressBookTasks;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -52,7 +52,7 @@ public class DeleteTaskCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        model.addPerson(GEORGE);
+        model.addPerson(BOB);
 
         Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST.getZeroBased());
 
