@@ -54,9 +54,10 @@ public class DeleteTaskCommand extends Command {
         Task taskToDelete = lastShownTaskList.get(targetIndex.getZeroBased());
 
         List<Person> affectedPersonList = taskToDelete.getAssignees();
-        // System.out.println(affectedPersonList);
+        System.out.println("affectedPersonList: " + affectedPersonList);
 
         for (Person person : affectedPersonList) {
+            System.out.println("Inside loop affectedPersonList");
             // System.out.println(fullPersonList.get(fullPersonList.indexOf(person)).getNumOfTasks());
             Person personToUpdate = fullPersonList.get(fullPersonList.indexOf(person));
             model.decreaseNumOfTasks(personToUpdate);
