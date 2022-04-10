@@ -64,6 +64,8 @@ ManageEZPZ is a **desktop app for that allows managers or supervisors to manage 
 
 * All indexes are int based, as such the maximum value is 2147483647 (2<sup>31</sup> - 1).
 
+* Employee `Names` and Task `Description` are case-sensitive. 
+
 </div>
 
 <div style="page-break-after: always;"></div>
@@ -128,6 +130,7 @@ Format: `editEmployee INDEX n/NAME p/PHONE_NUMBER e/EMAIL`
 * The index **must be a positive integer** 1, 2, 3, …​
 * Existing values will be updated to the input values.
 * All tasks that are assigned to the edited employee will be updated to reflect the new changes of the employee.
+* No 2 Employees should have the same name, phone number or email.
 
 Examples:
 * `editEmployee 1 p/91234567 e/johndoe@example.com` edits the phone number and email address of the 1st employee to be 91234567 and johndoe@example.com respectively. All tasks that are assigned to the 1st employee will be updated to reflect the new changes of the employee.
@@ -262,7 +265,7 @@ Either one of `desc/NAME`, `date/DATE` or `at/TIME` must exist.
   and mm should only be between 00 and 59.
 * For Todo, you are not allowed to use `date/DATE` and/or `at/TIME` as it does not have a date 
 and time field to be edited. 
-* You can update a task with the same description, date and/or time.  
+* You can update a task to the same description, date and/or time.  
 
 <div style="page-break-after: always;"></div>
 
@@ -286,7 +289,9 @@ For Deadline and Event, the DATE must be in this format: YYYY-MM-DD <br><br>
  
 For Deadline and Event, any TIME related fields must be in the format HHmm, where HH should only be between 00 and 23 and mm should only be between 00 and 59. <br><br>
 
-For Event, the START_TIME must be earlier than the END_TIME.
+For Event, the START_TIME must be earlier than the END_TIME. <br><br>
+
+Editing a Task to another already existing task will result in an error.
 
 </div>
 

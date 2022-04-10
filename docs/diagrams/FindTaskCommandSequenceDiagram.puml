@@ -13,10 +13,10 @@ box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 end box
 
-[-> LogicManager : execute("findTask priority/HIGH event/")
+[-> LogicManager : execute("findTask todo/")
 activate LogicManager
 
-LogicManager -> AddressBookParser : parseCommand("findTask priority/HIGH event/")
+LogicManager -> AddressBookParser : parseCommand("findTask todo/")
 activate AddressBookParser
 
 create FindTaskCommandParser
@@ -25,11 +25,11 @@ activate FindTaskCommandParser
 FindTaskCommandParser --> AddressBookParser : :FindTaskCommandParser
 deactivate FindTaskCommandParser
 
-AddressBookParser -> FindTaskCommandParser : parse(" priority/HIGH event/")
+AddressBookParser -> FindTaskCommandParser : parse(" todo/")
 activate FindTaskCommandParser
 
 create FindTaskCommand
-FindTaskCommandParser -> FindTaskCommand : FindTaskCommand(TaskMultiplePredicate)
+FindTaskCommandParser -> FindTaskCommand : FindTaskCommand()
 activate FindTaskCommand
 FindTaskCommand -> FindTaskCommandParser : :FindTaskCommand
 deactivate FindTaskCommand

@@ -60,18 +60,3 @@ Given below are my contributions to the project.
 * Created a team shared document
 * [Create our team PR into the module repo](https://github.com/nus-cs2103-AY2122S2/tp/pull/62)
 * Submitted tp UG draft into LumiNUS.
-
-<div style="page-break-after: always;"></div>
-
-#### Contribution to the user guide [#173](https://github.com/AY2122S2-CS2103-F11-1/tp/pull/173)
-
-![`listEmployee` command](../images/UGListEmployee.png)
-
-![`findEmployee` command](../images/UGFindEmployee.png)
-
-![`listTask` command](../images/UGListTask.png)
-
-
-![`findTask` command](../images/UGFindTask.png)
-
-#### Contribution to the developers guide

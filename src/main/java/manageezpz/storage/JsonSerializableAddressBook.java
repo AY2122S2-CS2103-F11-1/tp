@@ -87,16 +87,14 @@ class JsonSerializableAddressBook {
                 Person currentPerson = assigneesList.get(i);
                 if (hm.containsKey(currentPerson)) {
                     hm.put(currentPerson, hm.get(currentPerson) + 1);
-                } else {
-                    hm.put(currentPerson, 1);
                 }
             }
+        }
 
-            for (Person person : personList) {
-                int numOfTask = hm.get(person);
-                if (numOfTask != person.getNumOfTasks()) {
-                    throw new IllegalValueException(MESSAGE_INVALID_JSON_VALUE);
-                }
+        for (Person person : personList) {
+            int numOfTask = hm.get(person);
+            if (numOfTask != person.getNumOfTasks()) {
+                throw new IllegalValueException(MESSAGE_INVALID_JSON_VALUE);
             }
         }
     }

@@ -15,6 +15,7 @@ title: Developer Guide
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## **Design**
 
@@ -81,6 +82,8 @@ The `UI` component,
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Task` object residing in the `Model`.
 
+<div style="page-break-after: always;"></div>
+
 ### Logic component
 
 **API** : [`Logic.java`](https://github.com/AY2122S2-CS2103-F11-1/tp/blob/master/src/main/java/manageezpz/logic/Logic.java)
@@ -130,6 +133,7 @@ The `Model` component,
 <img src="images/BetterModelClassDiagramUpdated.png" width="450" />
 </div>
 
+<div style="page-break-after: always;"></div>
 
 ### Storage component
 
@@ -408,22 +412,22 @@ The find feature utilizes mainly the following classes:
   * `TaskMultiplePredicate` for filtering task and `PersonMultiplePredicate` for filtering employees.
   
 #### Implementation flow for the find task/employee feature
-Given below is the implementation of the find task command when the user enters `findTask priority/HIGH event/`
+Given below is the implementation of the find task command when the user enters `findTask todo/`
 
 1. The user input will be sent to `FindTaskCommandParser`
-2. `FindTaskCommandParser` will note down that the task type to search for is an event with a high priority.
-3. Since the inputs that the user entered is valid, the parser will create a `TaskMultiplePredicate` using priority 
-   `high` and task type `event` while setting the rest of the attributes to `null`.
+2. `FindTaskCommandParser` will note down that the task type to search.
+3. Since the inputs that the user entered is valid, the parser will create a `TaskMultiplePredicate` task type `todo` 
+   while setting the rest of the attributes to `null`.
 4. The attribute will be used as the argument to create the `FindTaskCommand`
 5. When the `FindTaskCommand` executes, the predicate will be sent to the `ModelManager` to filter out tasks that 
    satisfy the predicate.
 
 ![Expected find task command result](images/FindTaskCommand.png)
 
-*The expected result for `findTask priority/HIGH event/`*
+*The expected result for `findTask todo/`*
 
-![UML diagram for find task command](images/FindTaskCommandSequenceDiagram.png)
-*The UML Sequence diagram for `findTask priority/HIGH event/`*
+<img src="images/FindTaskCommandSequenceDiagram.png">
+*The UML Sequence diagram for `findTask todo/`*
 
 #### Design Consideration
 * Allow usage of multiple attributes as search term to filter out tasks/employee that has the specified attributes.
@@ -480,6 +484,7 @@ The following activity diagram summarizes what happens when a user executes a ne
 * [DevOps guide](DevOps.md)
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## **Appendix: Requirements**
 
@@ -902,9 +907,10 @@ Preconditions: User is currently using ManageEZPZ.
 | **Mainstream OS** | Windows, Linux, Unix, OS-X                                                 |
 | **Users**         | Applies to both managers or supervisors                                    |
 | **command**       | A message sent as an input from User, that coincides with our Command List |
-| **Person**        | An employee
+| **Person**        | An employee                                                                |
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## **Appendix: Instructions for manual testing**
 
@@ -1162,6 +1168,8 @@ testers are expected to do more *exploratory* testing.
    2. Modify the Employee list or Task list by using any commands that will affect the out come of both lists.
    3. Relaunch the app. <br>
       Expected: ManageEZPZ would retain the recent changes.
+
+<div style="page-break-after: always;"></div>
 
 ## **Appendix: Effort**
 

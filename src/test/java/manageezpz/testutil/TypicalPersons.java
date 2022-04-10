@@ -67,6 +67,20 @@ public class TypicalPersons {
         return ab;
     }
 
+    /**
+     * Returns an {@code AddressBook} with all the typical employees.
+     */
+    public static AddressBook getTypicalAddressBookEmployeesEdit() {
+        AddressBook ab = new AddressBook();
+        for (Person person : getTypicalPersons()) {
+            if (person.equals(ALICE)) {
+                continue;
+            }
+            ab.addPerson(person);
+        }
+        return ab;
+    }
+
     public static List<Person> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
