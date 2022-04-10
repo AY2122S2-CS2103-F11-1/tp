@@ -9,13 +9,13 @@ import static manageezpz.logic.commands.DeleteTaskCommand.MESSAGE_USAGE;
 import static manageezpz.testutil.TypicalIndexes.INDEX_FIRST;
 import static manageezpz.testutil.TypicalIndexes.INDEX_SECOND;
 import static manageezpz.testutil.TypicalPersons.BOB;
+import static manageezpz.testutil.TypicalPersons.GEORGE;
 import static manageezpz.testutil.TypicalTasks.getTypicalAddressBookTasks;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import manageezpz.model.AddressBook;
 import manageezpz.testutil.AddressBookBuilder;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import manageezpz.commons.core.index.Index;
@@ -30,12 +30,7 @@ import manageezpz.model.task.Task;
  */
 public class DeleteTaskCommandTest {
 
-    private Model model;
-
-    @BeforeEach
-    public void setUp() {
-        model = new ModelManager(getTypicalAddressBookTasks(), new UserPrefs());
-    }
+    private final Model model = new ModelManager(getTypicalAddressBookTasks(), new UserPrefs());
 
     /*@Test
     public void execute_validIndexUnfilteredList_success() { // Failed on GitHub
@@ -62,16 +57,16 @@ public class DeleteTaskCommandTest {
     public void execute_validIndexUnfilteredList_success() {
         /*model.addPerson(BENSON);*/
 
-        Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST.getZeroBased());
+        Task taskToDelete = model.getFilteredTaskList().get(INDEX_SECOND.getZeroBased());
 
-        /*if (taskToDelete.getAssignees().contains(BOB)) {
-            model.untagEmployeeFromTask(taskToDelete, BOB);
-        }*/
+        if (taskToDelete.getAssignees().contains(GEORGE)) {
+            model.untagEmployeeFromTask(taskToDelete, GEORGE);
+        }
 
         /*model.tagEmployeeToTask(taskToDelete, model.getAddressBook().getPersonList().get(0));
         model.increaseNumOfTasks(model.getAddressBook().getPersonList().get(0));*/
 
-        DeleteTaskCommand deleteTaskCommand = new DeleteTaskCommand(INDEX_FIRST);
+        DeleteTaskCommand deleteTaskCommand = new DeleteTaskCommand(INDEX_SECOND);
 
         String expectedMessage = String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
 
