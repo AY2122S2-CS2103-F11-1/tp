@@ -2,7 +2,9 @@ package manageezpz.logic.commands;
 
 import static manageezpz.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
 import static manageezpz.logic.commands.CommandTestUtil.assertCommandFailure;
+import static manageezpz.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static manageezpz.logic.commands.CommandTestUtil.showTaskAtIndex;
+import static manageezpz.logic.commands.DeleteTaskCommand.MESSAGE_DELETE_TASK_SUCCESS;
 import static manageezpz.logic.commands.DeleteTaskCommand.MESSAGE_USAGE;
 import static manageezpz.testutil.TypicalIndexes.INDEX_FIRST;
 import static manageezpz.testutil.TypicalIndexes.INDEX_SECOND;
@@ -16,6 +18,7 @@ import manageezpz.commons.core.index.Index;
 import manageezpz.model.Model;
 import manageezpz.model.ModelManager;
 import manageezpz.model.UserPrefs;
+import manageezpz.model.task.Task;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -47,6 +50,19 @@ public class DeleteTaskCommandTest {
     }*/
 
     @Test
+    public void execute_validIndexUnfilteredList_success() {
+        Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST.getZeroBased());
+        DeleteTaskCommand deleteTaskCommand = new DeleteTaskCommand(INDEX_FIRST);
+
+        String expectedMessage = String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteTask(taskToDelete);
+
+        assertCommandSuccess(deleteTaskCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredTaskList().size() + 1);
 
@@ -71,6 +87,22 @@ public class DeleteTaskCommandTest {
 
         assertCommandSuccess(deleteTaskCommand, model, expectedMessage, expectedModel);
     }*/
+
+    @Test
+    public void execute_validIndexFilteredList_success() {
+        showTaskAtIndex(model, INDEX_FIRST);
+
+        Task taskToDelete = model.getFilteredTaskList().get(INDEX_FIRST.getZeroBased());
+        DeleteTaskCommand deleteTaskCommand = new DeleteTaskCommand(INDEX_FIRST);
+
+        String expectedMessage = String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete);
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteTask(taskToDelete);
+        showNoTask(expectedModel);
+
+        assertCommandSuccess(deleteTaskCommand, model, expectedMessage, expectedModel);
+    }
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
