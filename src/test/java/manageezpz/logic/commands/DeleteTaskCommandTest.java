@@ -8,7 +8,6 @@ import static manageezpz.logic.commands.DeleteTaskCommand.MESSAGE_DELETE_TASK_SU
 import static manageezpz.logic.commands.DeleteTaskCommand.MESSAGE_USAGE;
 import static manageezpz.testutil.TypicalIndexes.INDEX_FIRST;
 import static manageezpz.testutil.TypicalIndexes.INDEX_SECOND;
-import static manageezpz.testutil.TypicalPersons.BENSON;
 import static manageezpz.testutil.TypicalTasks.getTypicalAddressBookTasks;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
