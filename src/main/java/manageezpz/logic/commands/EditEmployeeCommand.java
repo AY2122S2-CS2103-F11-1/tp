@@ -109,7 +109,7 @@ public class EditEmployeeCommand extends Command {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editEmployeeDescriptor}.
      */
-    public static Person createEditedEmployee(Person personToEdit, EditEmployeeDescriptor editEmployeeDescriptor) {
+    private static Person createEditedEmployee(Person personToEdit, EditEmployeeDescriptor editEmployeeDescriptor) {
         assert personToEdit != null;
 
         Name updatedName = editEmployeeDescriptor.getName().orElse(personToEdit.getName());
